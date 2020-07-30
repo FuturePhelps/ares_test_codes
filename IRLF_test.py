@@ -6,18 +6,10 @@ from ares.physics.Constants import c
 pars = ares.util.ParameterBundle('mirocha2020:univ')
 pop = ares.populations.GalaxyPopulation(**pars)
 
-freqs, sed = pop.dust_sed(1e10, 1e15, 1000)
+x1, phi1 = pop.LuminosityFunction(6, None, wave = 1600)
+x2, phi2 = pop.LuminosityFunction(6, None, wave = 3e5)
 
-plt.loglog(freqs, sed[-1,:,2])
-plt.loglog(pop.dust.frequencies, pop.dust.L_nu[-1,:,2])
+plt.semilogy(x1, phi1, label = 'stellar luminosity (1600 A)')
+plt.semilogy(x2, phi2, label = 'dust luminosity (300 000 A)')
+plt.legend()
 plt.show()
-
-wave_max = pop.src.wavelengths.max()
-wave = c / 1e13 * 1e8
-L = pop.Luminosity(6, wave)
-pop.dust.L_nu
-L_dust = pop.dust.Luminosity(6, wave)
-print(wave_max)
-print(L)
-print(L_dust)
-print(L_dust > L)
